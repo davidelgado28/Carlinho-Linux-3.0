@@ -14,9 +14,9 @@ lb config noauto \
     --archive-areas "main contrib non-free non-free-firmware" \
     --mirror-bootstrap "http://deb.debian.org/debian" \
     --mirror-binary "http://deb.debian.org/debian" \
-    --mirror-binary-security "http://security.debian.org/debian-security" \
     --mirror-debian-installer "http://deb.debian.org/debian" \
-    --security true \
+    --security false \
+    --updates true \
     --debian-installer live \
     --iso-volume "Carlinho-Linux" \
     --iso-application "Carlinho-Linux" \
