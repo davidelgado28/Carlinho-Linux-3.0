@@ -42,3 +42,9 @@ jobs:
         with:
           files: Carlinho-Linux-amd64.iso
 
+      - name: Upload build log
+        if: always()   
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
