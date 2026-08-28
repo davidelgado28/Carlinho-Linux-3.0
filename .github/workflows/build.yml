@@ -15,11 +15,7 @@ jobs:
       - name: Install live-build
         run: |
           sudo apt-get update
-          sudo apt-get install -y live-build squashfs-tools xorriso || true
-          # Instalar live-build mais recente do Debian
-          wget http://deb.debian.org/debian/pool/main/l/live-build/live-build_20230502_all.deb -O /tmp/lb.deb || true
-          sudo dpkg -i /tmp/lb.deb || sudo apt-get install -f -y
-
+          sudo apt-get install -y live-build squashfs-tools xorriso debian-archive-keyring debootstrap
 
       - name: Build ISO
         env:
@@ -27,6 +23,11 @@ jobs:
         run: |
           chmod +x build.sh
           sudo bash ./build.sh
+
+      - name: Install Debian debootstrap (fallback)
+        run: |
+          wget http://deb.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.128_all.deb -O /tmp/d.deb || true
+          sudo dpkg -i /tmp/d.deb || true
 
       - name: Rename ISO
         run: |
