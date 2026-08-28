@@ -1,1 +1,43 @@
+name: Build Carlinho-Linux ISO
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install live-build
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y live-build squashfs-tools xorriso
+
+      - name: Build ISO
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          sudo ./build.sh
+
+      - name: Rename ISO
+        run: |
+          mv images/*.iso Carlinho-Linux-amd64.iso || true
+          find . -name "*.iso" -exec mv {} Carlinho-Linux-amd64.iso \;
+
+      - name: Upload ISO Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Carlinho-Linux-ISO
+          path: Carlinho-Linux-amd64.iso
+          compression-level: 0
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Carlinho-Linux-amd64.iso
 
