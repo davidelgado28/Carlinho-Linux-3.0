@@ -21,7 +21,8 @@ jobs:
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
-          sudo ./build.sh
+          chmod +x build.sh
+          sudo bash ./build.sh
 
       - name: Rename ISO
         run: |
