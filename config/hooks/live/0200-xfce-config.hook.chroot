@@ -1,0 +1,134 @@
+#!/bin/bash
+set -e
+
+# Usuário live
+useradd -m -s /bin/bash -G sudo,video,audio,plugdev carlinho || true
+echo "carlinho:carlinho" | chpasswd
+echo "carlinho ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/carlinho
+
+# Configuração para o usuário via skel
+SKEL=/etc/skel/.config
+mkdir -p $SKEL/xfce4/xfconf/xfce-perchannel-xml
+
+cat > $SKEL/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="xfce4-desktop" version="1.0">
+  <property name="backdrop" type="empty">
+    <property name="screen0" type="empty">
+      <property name="monitordp0" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="last-image" type="string" value="/usr/share/backgrounds/carlinho-wallpaper.png"/>
+          <property name="image-style" type="int" value="5"/>
+        </property>
+      </property>
+    </property>
+  </property>
+</channel>
+EOF
+
+# Tema vermelho/escuro
+cat > $SKEL/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml << 'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="xsettings" version="1.0">
+  <property name="Net" type="empty">
+    <property name="ThemeName" type="string" value="Adwaita-dark"/>
+    <property name="IconThemeName" type="string" value="Adwaita"/>
+  </property>
+</channel>
+EOF
+
+# Ícones na área de trabalho (atalhos)
+mkdir -p /etc/skel/Desktop
+cat > /etc/skel/Desktop/terminal.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Terminal
+Comment=Terminal Bash
+Exec=xfce4-terminal
+Icon=utilities-terminal
+EOF
+
+cat > /etc/skel/Desktop/vscode.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=VS Code
+Comment=Desenvolvimento
+Exec=/usr/share/code/code --no-sandbox --user-data-dir
+Icon=code
+Terminal=false
+Categories=Development;
+EOF
+
+cat > /etc/skel/Desktop/firefox.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Navegador
+Exec=firefox-esr %u
+Icon=firefox-esr
+Terminal=false
+Categories=Network;
+EOF
+
+cat > /etc/skel/Desktop/cheese.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Câmera
+Exec=cheese
+Icon=cheese
+Terminal=false
+Categories=Graphics;Video;
+EOF
+
+cat > /etc/skel/Desktop/gthumb.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Galeria
+Exec=gthumb
+Icon=gthumb
+Terminal=false
+Categories=Graphics;
+EOF
+
+cat > /etc/skel/Desktop/mousepad.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Bloco de Notas
+Exec=mousepad %f
+Icon=accessories-text-editor
+Terminal=false
+Categories=Utility;TextEditor;
+EOF
+
+cat > /etc/skel/Desktop/thunar.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Arquivos
+Exec=thunar
+Icon=file-manager
+Terminal=false
+Categories=System;FileManager;
+EOF
+
+chmod +x /etc/skel/Desktop/*.desktop
+
+# "Sobre o Carlinho-Linux"
+cat > /usr/share/applications/carlinho-about.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Sobre o Carlinho-Linux
+Exec=bash -c 'xfce4-terminal -e "echo Bem-vindo ao Carlinho-Linux!; neofetch; exec bash"'
+Icon=computer
+Terminal=false
+Categories=System;
+EOF
+
+chmod +x /usr/share/applications/carlinho-about.desktop
+exit 0
