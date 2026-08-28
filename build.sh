@@ -64,8 +64,18 @@ EOF
 mkdir -p config/packages.chroot
 wget -q -O config/packages.chroot/vscode.deb "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
 
-# Gerar a ISO
+# Gerar ISO
 sudo lb build 2>&1 | tee build.log
+
+if ! ls *.iso binary*.iso 2>/dev/null | grep -q iso; then
+    echo "O lb build FALHOU. Últimas 50 linhas do log:"
+    tail -50 build.log
+    exit 1
+fi
+
+mkdir -p images
+mv *.iso images/Carlinho-Linux-amd64.iso
+echo "ISO gerada em images/"
 
 # Renomear qualquer ISO gerada
 sudo find . -maxdepth 1 -name "*.iso" -exec mv {} images/Carlinho-Linux-amd64.iso \;
