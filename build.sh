@@ -14,8 +14,7 @@ lb config noauto \
     --debian-installer live \
     --iso-volume "Carlinho-Linux" \
     --iso-application "Carlinho-Linux" \
-    --bootappend-live "boot=live components locales=pt_BR.UTF-8 keyboard-layouts=br hostname=carlinho username=carlinho" \
-    --image-name carlinho-linux
+    --bootappend-live "boot=live components locales=pt_BR.UTF-8 keyboard-layouts=br hostname=carlinho username=carlinho"
 
 # Copiar package list 
 mkdir -p config/package-lists
