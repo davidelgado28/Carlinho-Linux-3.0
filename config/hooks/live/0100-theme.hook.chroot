@@ -1,1 +1,25 @@
+#!/bin/bash
+set -e
 
+# Instalar VS Code (oficial) 
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/ms.gpg
+echo "deb [signed-by=/usr/share/keyrings/ms.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list
+apt-get update
+apt-get install -y code
+rm /etc/apt/sources.list.d/vscode.list
+
+# Configurar locale pt_BR 
+sed -i 's/# pt_BR.UTF-8/pt_BR.UTF-8/' /etc/locale.gen
+locale-gen
+update-locale LANG=pt_BR.UTF-8
+
+# Autologin do usuário carlinho 
+mkdir -p /etc/lightdm/lightdm.conf.d
+cat > /etc/lightdm/lightdm.conf.d/50-autologin.conf << 'EOF'
+[Seat:*]
+autologin-user=carlinho
+autologin-user-timeout=0
+autologin-session=xfce
+EOF
+
+exit 0
