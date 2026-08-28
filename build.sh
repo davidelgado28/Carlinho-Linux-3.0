@@ -8,9 +8,13 @@ mkdir -p images
 
 # Configuração base
 lb config noauto \
+    --mode debian \
     --distribution bookworm \
     --architecture amd64 \
     --archive-areas "main contrib non-free non-free-firmware" \
+    --mirror-bootstrap "http://deb.debian.org/debian" \
+    --mirror-binary "http://deb.debian.org/debian" \
+    --mirror-binary-security "http://security.debian.org" \
     --debian-installer live \
     --iso-volume "Carlinho-Linux" \
     --iso-application "Carlinho-Linux" \
