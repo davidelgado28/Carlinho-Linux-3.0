@@ -15,7 +15,11 @@ jobs:
       - name: Install live-build
         run: |
           sudo apt-get update
-          sudo apt-get install -y live-build squashfs-tools xorriso
+          sudo apt-get install -y live-build squashfs-tools xorriso || true
+          # Instalar live-build mais recente do Debian
+          wget http://deb.debian.org/debian/pool/main/l/live-build/live-build_20230502_all.deb -O /tmp/lb.deb || true
+          sudo dpkg -i /tmp/lb.deb || sudo apt-get install -f -y
+
 
       - name: Build ISO
         env:
