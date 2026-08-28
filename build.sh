@@ -17,10 +17,10 @@ lb config noauto \
     --bootappend-live "boot=live components locales=pt_BR.UTF-8 keyboard-layouts=br hostname=carlinho username=carlinho" \
     --image-name carlinho-linux
 
-# Copiar package list
+# Copiar package list 
 mkdir -p config/package-lists
 cat > config/package-lists/carlinho.list.chroot << 'EOF'
-# ===== Ambiente de Desktop =====
+# Ambiente de Desktop 
 xfce4
 xfce4-terminal
 xfce4-goodies
@@ -29,11 +29,10 @@ network-manager-gnome
 pulseaudio
 pavucontrol
 
-# Navegador
+# Navegador 
 firefox-esr
 
 # Desenvolvimento 
-code
 git
 build-essential
 python3
@@ -62,7 +61,11 @@ fonts-noto-color-emoji
 locales
 EOF
 
-# Gerar ISO
+# Baixar o VSCode
+mkdir -p config/packages.chroot
+wget -q -O config/packages.chroot/vscode.deb "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
+
+# Gerar a ISO
 sudo lb build 2>&1 | tee build.log
 
 mv carlinho-linux*.iso images/ 2>/dev/null || true
