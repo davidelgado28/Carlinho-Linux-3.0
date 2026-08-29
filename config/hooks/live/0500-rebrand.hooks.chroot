@@ -1,0 +1,31 @@
+#!/bin/bash
+set -e
+
+cat > /etc/os-release << 'EOF'
+PRETTY_NAME="Carlinho-Linux 12 (carlin)"
+NAME="Carlinho-Linux"
+VERSION_ID="12"
+VERSION="12 (carlin)"
+VERSION_CODENAME=carlin
+ID=carlinho
+ID_LIKE=debian
+HOME_URL="https://github.com/davidelgado28/Carlinho-Linux"
+SUPPORT_URL="https://github.com/davidelgado28/Carlinho-Linux"
+BUG_REPORT_URL="https://github.com/davidelgado28/Carlinho-Linux/issues"
+BUILD_ID=live
+EOF
+
+ln -sf /etc/os-release /usr/lib/os-release
+
+cat > /etc/issue << 'EOF'
+Carlinho-Linux 12 \n \l
+EOF
+
+cat > /etc/lsb-release << 'EOF'
+DISTRIB_ID=Carlinho
+DISTRIB_RELEASE=12
+DISTRIB_CODENAME=carlin
+DISTRIB_DESCRIPTION="Carlinho-Linux 12 (carlin)"
+EOF
+
+echo "Carlinho-Linux" > /etc/hostname
