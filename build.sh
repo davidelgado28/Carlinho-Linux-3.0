@@ -1,18 +1,15 @@
 #!/bin/bash
 set -e
 
-export DEBIAN_FRONTEND=noninteractive
-
-sudo rm -rf cache chroot .build binary build.log
-mkdir -p images
-
- cmd in lb debootstrap xorriso; do
+for cmd in lb debootstrap xorriso; do
     if ! which "$cmd" > /dev/null 2>&1; then
         echo "Comando '$cmd' não encontrado!"
         exit 1
     fi
 done
 echo "Dependências OK: lb, debootstrap, xorriso"
+
+sudo rm -rf cache chroot .build binary build.log
 
 # Configuração base
 lb config noauto \
