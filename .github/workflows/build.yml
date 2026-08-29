@@ -26,6 +26,9 @@ jobs:
           chmod +x build.sh
           sudo bash ./build.sh
 
+      - name: Fix hook permissions
+        run: chmod +x config/hooks/live/*.hook.chroot
+
       - name: Install Debian debootstrap (fallback)
         run: |
           wget http://deb.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.128_all.deb -O /tmp/d.deb || true
