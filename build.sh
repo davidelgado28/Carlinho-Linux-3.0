@@ -11,17 +11,10 @@ lb config noauto \
     --mode debian \
     --distribution bookworm \
     --architecture amd64 \
-    --archive-areas "main contrib non-free non-free-firmware" \
     --mirror-bootstrap "http://deb.debian.org/debian" \
     --mirror-binary "http://deb.debian.org/debian" \
-    --mirror-debian-installer "http://deb.debian.org/debian" \
-    --security false \
-    --updates true \
     --debian-installer live \
-    --iso-volume "Carlinho-Linux" \
-    --iso-application "Carlinho-Linux" \
     --bootappend-live "boot=live components locales=pt_BR.UTF-8 keyboard-layouts=br hostname=carlinho username=carlinho"
-
 
 # Copiar package list 
 mkdir -p config/package-lists
