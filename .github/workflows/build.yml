@@ -30,8 +30,9 @@ jobs:
 
       - name: Rename ISO
         run: |
-          mv images/*.iso Carlinho-Linux-amd64.iso || true
-          find . -name "*.iso" -exec mv {} Carlinho-Linux-amd64.iso \;
+          sudo mv images/*.iso Carlinho-Linux-amd64.iso
+          sudo chown runner:runner Carlinho-Linux-amd64.iso
+          sudo chmod 644 Carlinho-Linux-amd64.iso
 
       - name: Upload ISO Artifact
         uses: actions/upload-artifact@v4
