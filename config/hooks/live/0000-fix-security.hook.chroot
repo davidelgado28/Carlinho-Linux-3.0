@@ -1,0 +1,14 @@
+#!/bin/bash
+set -e
+
+# Substituir a URL de segurança
+sed -i 's|http://security.debian.org bookworm/updates|http://security.debian.org/debian-security bookworm-security|g' /etc/apt/sources.list || true
+
+if [ -d /etc/apt/sources.list.d ]; then
+    sed -i 's|bookworm/updates|bookworm-security|g' /etc/apt/sources.list.d/* 2>/dev/null || true
+fi
+
+echo "sources.list final:"
+cat /etc/apt/sources.list
+
+exit 0
