@@ -15,8 +15,7 @@ jobs:
       - name: Install live-build (versão atual do Git Debian)
         run: |
           sudo apt-get update
-          sudo apt-get install -y git squashfs-tools xorriso debian-archive-keyring debootstrap make
-          # Compilar e instalar o live-build mais recente (suporta bookworm-security)
+          sudo apt-get install -y git squashfs-tools xorriso debian-archive-keyring debootstrap make gettext
           git clone https://salsa.debian.org/live-team/live-build.git /tmp/live-build
           cd /tmp/live-build
           sudo make install
