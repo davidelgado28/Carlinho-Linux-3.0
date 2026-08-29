@@ -3,15 +3,15 @@ set -e
 
 for cmd in lb debootstrap xorriso; do
     if ! which "$cmd" > /dev/null 2>&1; then
-        echo "Comando '$cmd' não encontrado!"
+        echo "❌ Comando '$cmd' não encontrado!"
         exit 1
     fi
 done
-echo "Dependências OK: lb, debootstrap, xorriso"
 
+# Limpeza
 sudo rm -rf cache chroot .build binary build.log
 
-# Configuração base
+# Configuração
 lb config noauto \
     --mode debian \
     --distribution bookworm \
@@ -19,14 +19,11 @@ lb config noauto \
     --mirror-bootstrap "http://deb.debian.org/debian" \
     --mirror-binary "http://deb.debian.org/debian" \
     --debian-installer live \
-    --bootappend-live "boot=live components locales=pt_BR.UTF-8 keyboard-layouts=br hostname=carlinho username=carlinho"
+    --bootappend-live "boot=live components locales=pt_BR.UTF8 keyboard-layouts=br hostname=carlinho username=carlinho"
 
 sed -i 's|bookworm/updates|bookworm-security|g' config/chroot || true
 sed -i 's|http://security.debian.org$|http://security.debian.org/debian-security|g' config/chroot || true
 sed -i 's|http://security.debian.org/$|http://security.debian.org/debian-security|g' config/chroot || true
-
-echo "sources.list que será usado no chroot:"
-cat config/chroot | grep -i security || true
 
 # Copiar package list 
 mkdir -p config/package-lists
