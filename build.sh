@@ -18,9 +18,9 @@ lb config noauto \
     --architecture amd64 \
     --mirror-bootstrap "http://deb.debian.org/debian" \
     --mirror-binary "http://deb.debian.org/debian" \
-    --debian-installer live \
-    --bootappend-live "boot=live components locales=pt_BR.UTF8 keyboard-layouts=br hostname=carlinho username=carlinho"
     --mirror-binary-security "http://security.debian.org/debian-security" \
+    --debian-installer live \
+    --bootappend-live "boot=live components locales=pt_BR.UTF-8 keyboard-layouts=br hostname=carlinho username=carlinho"
 
 sed -i 's|bookworm/updates|bookworm-security|g' config/chroot || true
 sed -i 's|http://security.debian.org$|http://security.debian.org/debian-security|g' config/chroot || true
