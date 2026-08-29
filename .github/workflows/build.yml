@@ -12,10 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install live-build
+      - name: Install Debian debootstrap (fallback)
         run: |
-          sudo apt-get update
-          sudo apt-get install -y live-build squashfs-tools xorriso debian-archive-keyring debootstrap
+          wget http://deb.debian.org/debian/pool/main/d/debootstrap/debootstrap_1.0.128_all.deb -O /tmp/d.deb || true
+          sudo dpkg -i /tmp/d.deb || true
 
       - name: Build ISO
         env:
