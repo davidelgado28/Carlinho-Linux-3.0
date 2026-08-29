@@ -12,11 +12,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install live-build
+      - name: Install live-build (versão atual do Git Debian)
         run: |
           sudo apt-get update
-          sudo apt-get install -y live-build squashfs-tools xorriso debian-archive-keyring debootstrap
-          which lb
+          sudo apt-get install -y git squashfs-tools xorriso debian-archive-keyring debootstrap make
+          # Compilar e instalar o live-build mais recente (suporta bookworm-security)
+          git clone https://salsa.debian.org/live-team/live-build.git /tmp/live-build
+          cd /tmp/live-build
+          sudo make install
           lb --version
 
       - name: Build ISO
