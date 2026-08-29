@@ -21,6 +21,13 @@ lb config noauto \
     --debian-installer live \
     --bootappend-live "boot=live components locales=pt_BR.UTF-8 keyboard-layouts=br hostname=carlinho username=carlinho"
 
+sed -i 's|bookworm/updates|bookworm-security|g' config/chroot || true
+sed -i 's|http://security.debian.org$|http://security.debian.org/debian-security|g' config/chroot || true
+sed -i 's|http://security.debian.org/$|http://security.debian.org/debian-security|g' config/chroot || true
+
+echo "sources.list que será usado no chroot:"
+cat config/chroot | grep -i security || true
+
 # Copiar package list 
 mkdir -p config/package-lists
 cat > config/package-lists/carlinho.list.chroot << 'EOF'
