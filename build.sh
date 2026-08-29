@@ -77,11 +77,13 @@ wget -q -O config/packages.chroot/vscode.deb "https://code.visualstudio.com/sha/
 sudo lb build 2>&1 | tee build.log
 
 if ! ls *.iso binary*.iso 2>/dev/null | grep -q iso; then
-    echo "O lb build FALHOU. Últimas 50 linhas do log:"
-    tail -50 build.log
+    echo "❌ O lb build FALHOU."
+    echo "🔍 Linhas com erro:"
+    grep -iE "^E:|error|failed|Fatal" build.log | tail -30 || true
+    echo "🔍 Últimas 40 linhas:"
+    tail -40 build.log
     exit 1
 fi
-
 mkdir -p images
 mv *.iso images/Carlinho-Linux-amd64.iso
 echo "ISO gerada em images/"
