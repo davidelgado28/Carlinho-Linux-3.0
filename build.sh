@@ -3,8 +3,12 @@ set -e
 
 export DEBIAN_FRONTEND=noninteractive
 
-sudo rm -rf config cache chroot .build binary images
+sudo rm -rf cache chroot .build binary build.log
 mkdir -p images
+
+for cmd in lb debootstrap xorriso; do
+    command -v cmd >/dev/null || { echo "❌ Comando 'cmd' não encontrado!"; exit 1; }
+done
 
 # Configuração base
 lb config noauto \
